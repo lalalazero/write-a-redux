@@ -1,11 +1,11 @@
-function createStore(initState) {
+function createStore(initState, reducer) {
     let state = initState
     let listeners = []
     function getState() {
         return state
     }
-    function setState(newState) {
-        state = newState
+    function dispatch(action) {
+        state = reducer(state, action)
         notify()
     }
     function subscribe(fn) {
@@ -18,16 +18,22 @@ function createStore(initState) {
     }
     return {
         getState,
-        setState,
-        subscribe
+        subscribe,
+        dispatch
     }
 }
-
-let store = createStore({ count: 0 })
+function reducer(state, action) {
+    switch (action.type) {
+        case 'increment': return { count: state.count + action.payload };
+        case 'decrement': return { count: state.count - action.payload };
+        default: return state
+    }
+}
+let store = createStore({ count: 0 }, reducer)
 function fn() {
     console.log('state has change')
     console.log(store.getState())
 }
 store.subscribe(fn)
-console.log(store.getState())
-store.setState({ count: 1 })
+store.dispatch({ type: 'increment', payload: 12 })
+store.dispatch({ type: 'decrement', payload: 6 })
