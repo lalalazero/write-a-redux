@@ -16,7 +16,8 @@ function applyMiddlewares(middlewares) {
     return function rewriteStore(oldCreateStore) {
         return function newCreateStore(initState, reducer) {
             let store = oldCreateStore(initState, reducer)
-            let dispatch = store.dispatch
+            let { getState, dispatch }= store
+            middlewares = middlewares.map(middleware => middleware({ getState, dispatch }))
             middlewares.reverse().map(middleware => dispatch = middleware(dispatch))
             store.dispatch = dispatch
             return store
@@ -64,17 +65,18 @@ let mergedReducer = combineReducer({
     count: countReducer
 })
 
-const A = next => action => {
+const A = ({ getState, dispatch }) => next => action => {
     console.log('a do something')
+    console.log(getState())
     next(action)
     console.log('a back')
 }
-const B = next => action => {
+const B = ({ getState, dispatch }) => next => action => {
     console.log('b do something')
     next(action)
     console.log('b back')
 }
-const C = next => action => {
+const C = ({ getState, dispatch }) => next => action => {
     console.log('c do something')
     next(action)
     console.log('c back')
