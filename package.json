@@ -1,7 +1,9 @@
 {
-  "name": "write-a-redux",
-  "version": "1.0.0",
-  "main": "index.js",
+  "name": "@zerocodes/redux",
+  "version": "0.0.1",
+  "main": "cjs/index.js",
+  "module": "esm/index.js",
+  "types": "cjs/index.d.ts",
   "repository": "https://github.com/lalalazero/write-a-redux.git",
   "author": "lalalazero <zzzero520@hotmail.com>",
   "license": "MIT",
@@ -10,6 +12,14 @@
     "build:esm": "rm -rf esm && tsc --declaration",
     "build:cjs": "rm -rf cjs && tsc --declaration --module commonjs --outDir cjs",
     "test": "jest src --coverage"
+  },
+  "files": [
+    "esm/**/*",
+    "cjs/**/*"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
   },
   "devDependencies": {
     "@babel/core": "^7.11.5",
