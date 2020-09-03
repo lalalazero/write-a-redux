@@ -11,7 +11,7 @@
     "build": "yarn build:esm && yarn build:cjs",
     "build:esm": "rm -rf esm && tsc --declaration",
     "build:cjs": "rm -rf cjs && tsc --declaration --module commonjs --outDir cjs",
-    "test": "jest src --coverage"
+    "test": "jest src --coverage --no-cache"
   },
   "files": [
     "esm/**/*",
@@ -37,6 +37,7 @@
     "jest": "^26.3.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-test-renderer": "^16.13.1",
     "shallowequal": "^1.1.0",
     "ts-jest": "^26.2.0",
     "typescript": "^3.5.2"
